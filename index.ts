@@ -1,5 +1,8 @@
 import dotenv from 'dotenv'
 import axios from 'axios';
+import { parseFromWK } from 'wkt-parser-helper';
+import proj4 from 'proj4';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -20,7 +23,7 @@ type AddressCode = {
 type Border = {
   "id": string,
   "title": string,
-  "geometry": string,
+  "wkt": string,
 }
 
 interface APIEndpointMeta {
@@ -87,7 +90,7 @@ async function getBorders(access_token: string, cd: string | undefined) {
         (ac: AddressCode) => ({
           "id": ac.cd,
           "title": ac.addr_name,
-          "geometry": ac.pg,
+          "wkt": ac.pg,
         })
       )
       return borders;
@@ -103,10 +106,34 @@ async function getBorders(access_token: string, cd: string | undefined) {
   }
 }
 
+function parseBorders(borders: Array<Border>) {
+  // Parses WKT borders to GeoJSON
+  const transformedBorders = borders.map(
+    (border: Border) => (
+      {
+        type: 'Feature',
+        geometry: parseFromWK(border.wkt),
+        properties: { "id": border.id, "title": border.title }
+      }
+    )
+  );
+  return JSON.stringify({ type: 'FeatureCollection', features: transformedBorders }, null, 4);
+}
 
 let accessToken = await getAuth();
-console.log(`accessToken: ${accessToken}`);
-
 let borders = await getBorders(accessToken!, undefined);
-console.log(borders)
+let tBorders = parseBorders(borders!);
+
+fs.writeFile('./raw/전국_시도_경계.json', tBorders, 'utf8', err => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('The file was saved to ./raw/전국_시도_경계.json');
+  }
+});
+
+// const epsg5179 = 'PROJCS["Korea 2000 / Unified CS",GEOGCS["Korea 2000",DATUM["Geocentric_datum_of_Korea",SPHEROID["GRS 1980",6378137,298.257222101],TOWGS84[0,0,0,0,0,0,0]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4737"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",38],PARAMETER["central_meridian",127.5],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",1000000],PARAMETER["false_northing",2000000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AUTHORITY["EPSG","5179"]]';
+// const epsg4326 = "EPSG:4326";
+// let projectedBorders = proj4(epsg5179, epsg4326, tBorders);
+// console.log(projectedBorders);
 
