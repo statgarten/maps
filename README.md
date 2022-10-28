@@ -14,3 +14,7 @@
   - `.env.template` 을 `.env`로 복사합니다.
   - `.env` 파일에 발급받은 CONSUMER_KEY, CONSUMER_SECRET 를 입력합니다.
   - `npm install` 을 통해 의존하는 패키지를 설치합니다.
+  - `npm run clean` 을 통해 현재 저장된 파일들을 지웁니다.
+  - `npm compile` 을 통해 새로운 파일을 다운로드 받고 `svg` 파일을 컴파일합니다.
+
+경계가 너무 단순화하다면 `package.json` 의 scripts 의 compile 명령어의 `1%` 를 더 큰 숫자로 수정한 후 compile 하십시오.
