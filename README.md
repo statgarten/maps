@@ -1,3 +1,5 @@
+# 대한민구 행정경계 GeoJSON 및 SVG
+
 대한민국 행정구역 경계를 SVG, GeoJSON으로 제공합니다. 행정구역 경계는 [통계청 SGIS 오픈 API](https://sgis.kostat.go.kr/developer/html/main.html)를 통해 수집하였습니다. 2020년(가장 최신) 행정구역 경계를 아래와 같이 제공합니다. 
 
 - `./json/` 폴더 내에 [SGIS API](https://sgis.kostat.go.kr/developer/html/newOpenApi/api/dataApi/basics.html)에서 제공하는 JSON 형식의 행정구역 경계 데이터를 제공합니다.
