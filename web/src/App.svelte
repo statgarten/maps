@@ -1,5 +1,7 @@
 <script lang="ts">
   import InlineSVG from "svelte-inline-svg";
+  import Footer from "./lib/Footer.svelte";
+
   const maps = [
     { name: "강원도 시군구 경계", fileName: "강원도_시군구_경계.svg" },
     { name: "경기도 시군구 경계", fileName: "경기도_시군구_경계.svg" },
@@ -26,7 +28,8 @@
     { name: "충청남도 시군구 경계", fileName: "충청남도_시군구_경계.svg" },
     { name: "충청북도 시군구 경계", fileName: "충청북도_시군구_경계.svg" },
   ];
-  import Footer from "./lib/Footer.svelte";
+  const commit_hash = "8247e23ded70eb908a61dbe2b3db07599b4a21cc";
+  const base_url = `https://raw.githubusercontent.com/statgarten/maps/${commit_hash}/svg/simple/`;
 </script>
 
 <main class="pb-16">
@@ -38,7 +41,7 @@
       >
         <p class="text-dark">{name}</p>
         <InlineSVG
-          src="https://raw.githubusercontent.com/statgarten/maps/cc92a8feff9817d92805b57ad2368c9c58552841/svg/simple/{fileName}"
+          src={base_url + fileName}
           alt={name}
           class="w-full h-auto fill-slate-500 stroke-white-900 hover:fill-slate-900 transition ease-in-out delay-10"
         />
