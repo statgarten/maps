@@ -8,6 +8,9 @@
 
 - `./svg/simple/` 폴더 내에 단순화한 행정구역 경계 데이터를 제공합니다.
 
+- `./web` 에서는 Svelte를 활용하여 단순화된 svg 파일들을 한눈에 볼 수 있는 웹앱을 제공합니다.
+  - `npm install` 로 패키지 설치 후, `npm run dev` 로 확인할 수 있습니다.
+
 ## 사용법
 
 - GitHub Repository 에서 직접 `.svg`, `.json` 파일을 다운로드 받습니다.
