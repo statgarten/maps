@@ -5,7 +5,7 @@
   "description": "Raw and simplified borders of Republic of Korea.",
   "main": "download.ts",
   "scripts": {
-    "compile": "tsx download.ts && mapshaper -i json/*.json snap -o id-field=title svg/ format=svg && mapshaper -i json/*.json snap -simplify 1% -o id-field=title svg/simple/ format=svg",
+    "compile": "tsx download.ts && mapshaper -i json/*.json snap -o id-field=title svg/ format=svg && mapshaper -i json/*.json snap -simplify 5% -o id-field=title svg/simple/ format=svg",
     "clean": "rm -rf json/ && rm -rf svg/ && mkdir -p svg/simple && mkdir json"
   },
   "keywords": [
